@@ -10,8 +10,12 @@ module.exports = {
           background: 'hsl(var(--btn-background))',
           'background-hover': 'hsl(var(--btn-background-hover))',
         },
+        whatsappGreen: '#128C7E',
+        whatsappGreenDark: '#075E54',
+        whatsappGreenLight: '#25D366',
+        whatsappBlue: '#34B7F1',
       },
     },
   },
   plugins: [],
-}
+};

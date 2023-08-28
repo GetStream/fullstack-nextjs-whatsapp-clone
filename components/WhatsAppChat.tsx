@@ -14,9 +14,9 @@ import {
   Window,
 } from 'stream-chat-react';
 
-import '@stream-io/stream-chat-css/dist/css/index.css';
 import './layout.css';
 import { User } from '@supabase/supabase-js';
+import ChannelListHeader from './ChannelListHeader';
 
 export default function WhatsAppChat({ user }: { user: User }) {
   const apiKey = process.env.NEXT_PUBLIC_REACT_APP_STREAM_KEY || 'Set API Key';
@@ -30,6 +30,8 @@ export default function WhatsAppChat({ user }: { user: User }) {
     type: 'messaging',
     members: { $in: [user.id] },
   };
+
+  const chatUser = chatClient.user;
 
   useEffect(() => {
     console.log('user', user);
@@ -46,20 +48,6 @@ export default function WhatsAppChat({ user }: { user: User }) {
 
       await chatClient.connectUser({ id: userId }, response.userToken);
 
-      // const channel = chatClient.channel('messaging', {
-      //   name: 'Magic Chat',
-      //   members: [userId, 'jeroenleenartsgetstreamio'],
-      // });
-
-      // channel
-      //   .create()
-      //   .then((response) => {
-      //     console.log(response);
-      //   })
-      //   .catch((err) => {
-      //     console.log(err);
-      //   });
-
       setIsLoading(false);
     });
   }, []);
@@ -72,17 +60,22 @@ export default function WhatsAppChat({ user }: { user: User }) {
         </div>
       )}
       {!isLoading && (
-        <Chat client={chatClient}>
-          <ChannelList sort={sort} filters={filters} />
-          <Channel>
-            <Window>
-              <ChannelHeader />
-              <MessageList />
-              <MessageInput />
-            </Window>
-            <Thread />
-          </Channel>
-        </Chat>
+        <div id="root">
+          <Chat client={chatClient}>
+            <div className="channel-list-container">
+              <ChannelListHeader user={chatUser} />
+              <ChannelList sort={sort} filters={filters} showChannelSearch />
+            </div>
+            <Channel>
+              <Window>
+                <ChannelHeader />
+                <MessageList />
+                <MessageInput />
+              </Window>
+              <Thread />
+            </Channel>
+          </Chat>
+        </div>
       )}
     </>
   );

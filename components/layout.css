@@ -2,20 +2,47 @@ html,
 body,
 #root {
   height: 100%;
+  width: 100%;
 }
 body {
   margin: 0;
 }
 #root {
-  display: flex;
+  display: grid;
+  grid-template-columns: 40% 1fr;
+  gap: 0;
 }
 
 .str-chat__channel-list {
-  width: 30%;
+  width: 100%;
 }
 .str-chat__channel {
   width: 100%;
 }
 .str-chat__thread {
   width: 45%;
+}
+
+.profile-row {
+  justify-content: space-between;
+  background: var(--background-header);
+}
+
+.profile-row > div {
+  gap: 1rem;
+}
+
+.profile-row button {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--icons-color);
+}
+
+.profile-row img {
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.channel-list-container {
+  overflow-y: scroll;
 }

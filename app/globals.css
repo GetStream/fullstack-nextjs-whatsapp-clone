@@ -2,12 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
+@import '~stream-chat-react/dist/css/v2/index.css';
+
 @layer base {
   :root {
     --background: 200 20% 98%;
     --btn-background: 200 10% 91%;
     --btn-background-hover: 200 10% 89%;
     --foreground: 200 50% 3%;
+
+    --whatsapp-green: #128c7e;
+    --whatsapp-greenDark: #075e54;
+    --whatsapp-greenLight: #25d366;
+    --whatsapp-blue: #34b7f1;
+
+    --background-header: #f0f2f5;
+    --background-base: #eae6df;
+    --icons-color: #54656f;
   }
 
   @media (prefers-color-scheme: dark) {
@@ -39,4 +50,33 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+body {
+  background: var(--background-base);
+}
+
+main {
+  position: relative;
+}
+
+.custom::before {
+  content: '';
+  position: absolute;
+  background: var(--whatsapp-green);
+  height: 11rem;
+  width: 100%;
+  top: 0;
+  z-index: -10;
+}
+
+.str-chat {
+  --str-chat__primary-color: var(--whatsapp-green);
+  --str-chat__active-primary-color: #004d40;
+  --str-chat__surface-color: #f5f5f5;
+  --str-chat__secondary-surface-color: #fafafa;
+  --str-chat__primary-surface-color: #e0f2f1;
+  --str-chat__primary-surface-color-low-emphasis: #edf7f7;
+  --str-chat__border-radius-circle: 6px;
+  --str-chat__avatar-border-radius: 50%;
 }
