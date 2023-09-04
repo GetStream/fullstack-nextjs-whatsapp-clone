@@ -3,18 +3,20 @@
 import { useEffect, useState } from 'react';
 
 import { StreamChat, ChannelSort, ChannelFilters } from 'stream-chat';
-import {
-  Channel,
-  ChannelHeader,
-  ChannelList,
-  Chat,
-  MessageInput,
-  MessageList,
-  Thread,
-  Window,
-} from 'stream-chat-react';
+import { ChannelList, Chat } from 'stream-chat-react';
 
+import { Channel } from './Channel';
+import {
+  StreamTheme,
+  StreamVideo,
+  StreamVideoClient,
+} from '@stream-io/video-react-sdk';
+
+import { Video } from './Video';
+import '@stream-io/video-react-sdk/dist/css/styles.css';
 import './layout.css';
+import './styles/index.scss';
+
 import { User } from '@supabase/supabase-js';
 import ChannelListHeader from './ChannelListHeader';
 
@@ -24,6 +26,7 @@ export default function WhatsAppChat({ user }: { user: User }) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const chatClient = StreamChat.getInstance(apiKey);
+  const [videoClient, setVideoClient] = useState<StreamVideoClient>();
 
   const sort: ChannelSort = { last_message_at: -1 };
   const filters: ChannelFilters = {
@@ -48,6 +51,16 @@ export default function WhatsAppChat({ user }: { user: User }) {
 
       await chatClient.connectUser({ id: userId }, response.userToken);
 
+      const _videoClient = new StreamVideoClient({
+        apiKey,
+        user: chatUser,
+        token: response.userToken,
+      });
+
+      await _videoClient.connectUser({ id: userId }, response.userToken);
+
+      setVideoClient(_videoClient);
+
       setIsLoading(false);
     });
   }, []);
@@ -59,21 +72,23 @@ export default function WhatsAppChat({ user }: { user: User }) {
           <p>Loading…</p>
         </div>
       )}
-      {!isLoading && (
+      {!isLoading && videoClient && (
         <div id="root">
           <Chat client={chatClient}>
-            <div className="channel-list-container">
-              <ChannelListHeader user={chatUser} />
-              <ChannelList sort={sort} filters={filters} showChannelSearch />
-            </div>
-            <Channel>
-              <Window>
-                <ChannelHeader />
-                <MessageList />
-                <MessageInput />
-              </Window>
-              <Thread />
-            </Channel>
+            <StreamVideo client={videoClient}>
+              <StreamTheme as="main" className="main-container">
+                <div className="channel-list-container">
+                  <ChannelListHeader user={chatUser} />
+                  <ChannelList
+                    sort={sort}
+                    filters={filters}
+                    showChannelSearch
+                  />
+                </div>
+                <Channel />
+                <Video />
+              </StreamTheme>
+            </StreamVideo>
           </Chat>
         </div>
       )}

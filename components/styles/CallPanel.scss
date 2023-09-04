@@ -1,0 +1,30 @@
+.rmc__call-panel-wrapper {
+  position: absolute;
+  top: 60px;
+  right: 20px;
+}
+
+.str-video__call-panel {
+  height: 350px;
+
+  .rmc__active-call-controls {
+    bottom: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .str-video__call-controls__button--variant-danger {
+    height: fit-content;
+  }
+
+  .str-video__participant,
+  .str-video__video-container {
+    display: flex;
+  }
+}
+
+.str-video__participant_details,
+.str-video__notification {
+  color: #fff;
+}

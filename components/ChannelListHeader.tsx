@@ -11,9 +11,9 @@ export default function ChannelListHeader({
   return (
     <div className="text-white flex items-center justify-between profile-row p-4">
       <Avatar
-        image={
-          'https://images.pexels.com/photos/5378700/pexels-photo-5378700.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
-        }
+        image={`https://getstream.io/random_png/?id=${
+          user?.id || 'undefined'
+        }&name=${user?.name || 'undefined'}`}
         shape="rounded"
         size={50}
       />
