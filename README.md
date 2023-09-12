@@ -1,48 +1,33 @@
-# Supabase Starter
+![Building WhatsApp Clone0-2000x840px](https://github.com/GetStream/fullstack-nextjs-whatsapp-clone/assets/39677/0c74c0e7-e802-4041-8d8f-17228cca9faf)
 
-This starter configures Supabase Auth to use cookies, making the user's session available throughout the entire Next.js app - Client Components, Server Components, Route Handlers, Server Actions and Middleware.
+# Fullstack WhatsApp clone using Next.js, Vercel and Supabase
 
-## Deploy your own
+This project contains all the code to run the FullStack WhatsApp clone using Next.js and Supebase.
 
-The Vercel deployment will guide you through creating a Supabase account and project. After installation of the Supabase integration, all relevant environment variables will be set up so that the project is usable immediately after deployment 🚀
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-supabase&project-name=nextjs-with-supabase&repository-name=nextjs-with-supabase&integration-ids=oac_jUduyjQgOyzev1fjrW83NYOv)
+To run this code, you need to have an active [Stream](https://getstream.io/chat/trial/) and [Supabase](https://database.new) account.
 
 ## How to use
 
 1. Create a [new Supabase project](https://database.new)
-1. Run `npx create-next-app -e with-supabase` to create a Next.js app using the Supabase Starter template
-1. Use `cd` to change into the app's directory
-1. Run `npm install` to install dependencies
-1. Rename `.env.local.example` to `.env.local` and update the values for `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` from [your Supabase project's API settings](https://app.supabase.com/project/_/settings/api)
+1. Sign up for a [Stream trial account](https://getstream.io/chat/trial/)
+1. Rename `.env.local.example` to `.env.local`
+1. Update the values for `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` from [your Supabase project's API settings](https://app.supabase.com/project/_/settings/api)
+1. Update the values for `NEXT_PUBLIC_REACT_APP_STREAM_KEY` and `REACT_APP_STREAM_SECRET` from [your Stream project's dashboard](https://dashboard.getstream.io/)
 1. Run `npm run dev` to start the local development server
 
-> Check out [the docs for Local Development](https://supabase.com/docs/guides/getting-started/local-development) to also run Supabase locally.
+### Deploy your own instance
 
-### Create a Supabase client
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FGetStream%2Ffullstack-nextjs-whatsapp-clone&env=NEXT_PUBLIC_SUPABASE_URL,NEXT_PUBLIC_SUPABASE_ANON_KEY,NEXT_PUBLIC_REACT_APP_STREAM_KEY,REACT_APP_STREAM_SECRET&envDescription=This%20project%20requires%20credentials%20for%20Supabase's%20and%20Stream's%20APIs.&envLink=https%3A%2F%2Fgithub.com%2FGetStream%2Ffullstack-nextjs-whatsapp-clone)
 
-Check out the [`/app/_examples`](./app/_examples/) folder for an example of creating a Supabase client in:
+Make sure you have the Supabase and Stream credentials available when you want to deploy to Vercel. The deployment will ask for these environment values:
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- `NEXT_PUBLIC_REACT_APP_STREAM_KEY`
+- `REACT_APP_STREAM_SECRET`
 
-- [Client Components](./app/_examples/client-component/page.tsx)
-- [Server Components](./app/_examples/server-component/page.tsx)
-- [Route Handlers](./app/_examples/route-handler/route.ts)
-- [Server Actions](./app/_examples/server-action/page.tsx)
+## Related Information
 
-### Create `todo` table and seed with data (optional)
-
-Navigate to [your project's SQL Editor](https://app.supabase.com/project/_/sql), click `New query`, paste the contents of the [init.sql](./supabase/migrations/20230618024722_init.sql) file and click `RUN`.
-
-This will create a basic `todos` table, enable Row Level Security (RLS), and write RLS policies enabling `select` and `insert` actions for `authenticated` users.
-
-To seed your `todos` table with some dummy data, run the contents of the [seed.sql](./supabase/seed.sql) file.
-
-## Feedback and issues
-
-Please file feedback and issues over on the [Supabase GitHub org](https://github.com/supabase/supabase/issues/new/choose).
-
-## More Supabase examples
-
-- [Next.js Subscription Payments Starter](https://github.com/vercel/nextjs-subscription-payments)
-- [Cookie-based Auth and the Next.js 13 App Router (free course)](https://youtube.com/playlist?list=PL5S4mPUpp4OtMhpnp93EFSo42iQ40XjbF)
+- [Stream Chat SDK](https://getstream.io/chat/sdk/react/)
+- [Stream Video SDK](https://getstream.io/video/sdk/react/)
 - [Supabase Auth and the Next.js App Router](https://github.com/supabase/supabase/tree/master/examples/auth/nextjs)
 - [Next.js Auth Helpers Docs](https://supabase.com/docs/guides/auth/auth-helpers/nextjs)
