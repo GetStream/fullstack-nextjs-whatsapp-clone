@@ -36,6 +36,8 @@ Make sure you have the Supabase and Stream credentials available when you want t
 - `NEXT_PUBLIC_REACT_APP_STREAM_KEY`
 - `REACT_APP_STREAM_SECRET`
 
+https://github.com/GetStream/fullstack-nextjs-whatsapp-clone/assets/39677/bf4f9bc8-f3aa-4c01-9d61-0ab829e55fcb
+
 ## 🛥 Stream Chat SDK
 
 **Fullstack WhatsApp clone using Next.js and Vercel** is built with **[Stream Chat SDK for React](https://getstream.io/chat/sdk/react?utm_source=Github&utm_medium=Github_Repo_Content_Ad&utm_content=Developer&utm_campaign=Github_Nov2023_Jeroen_WhatsAppReact&utm_term=DevRelOss)** to implement messaging systems. And **[Stream Video SDK for React](https://getstream.io/video/sdk/react/?utm_source=Github&utm_medium=Github_Repo_Content_Ad&utm_content=Developer&utm_campaign=Github_Nov2023_Jeroen_WhatsAppReact&utm_term=DevRelOss)** to implement video calling.
