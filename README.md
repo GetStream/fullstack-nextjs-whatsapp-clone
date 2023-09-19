@@ -1,4 +1,4 @@
-![Building WhatsApp Clone0-2000x840px](https://github.com/GetStream/fullstack-nextjs-whatsapp-clone/assets/39677/0c74c0e7-e802-4041-8d8f-17228cca9faf)
+![Building WhatsApp Clone0-1200x630px](https://github.com/GetStream/fullstack-nextjs-whatsapp-clone/assets/39677/b6ee4e13-86a9-4bb7-b5e5-e783db4c0886)
 
 # Fullstack WhatsApp clone using Next.js, Vercel and Supabase
 
