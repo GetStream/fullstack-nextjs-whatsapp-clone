@@ -2,7 +2,12 @@
 
 # Fullstack WhatsApp clone using Next.js, Vercel and Supabase
 
-This project contains all the code to run the FullStack WhatsApp clone using Next.js and Supebase.
+This project contains all the code to run the FullStack WhatsApp clone using Next.js and Supebase. The codebase was developed for an article series published on Stream's blog:
+
+- [Intro: Building a WhatsApp Clone with NextJS & Supabase](https://getstream.io/blog/whatsapp-nextjs/)
+- [Part 1: WhatsApp Web Clone Tutorial: User Authentication & Chat](https://getstream.io/blog/whatsapp-chat-authentication)
+- [Part 2:WhatsApp Web Clone Tutorial: Adding Video Call Functionality](https://getstream.io/blog/whatsapp-video-calling)
+- [Part 3: Code Tutorial: Deploying Our WhatsApp Web Clone Project](https://getstream.io/blog/whatsapp-app-hosting)
 
 The purpose of this repository is to demonstrate below:
 
