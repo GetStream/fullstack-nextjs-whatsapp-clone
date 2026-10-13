@@ -1,3 +1,5 @@
+> **This sample is out of date.** It uses stream-chat-react 10. For a current app, follow the [React chat tutorial](https://getstream.io/chat/sdk/react/tutorial/).
+
 ![Building WhatsApp Clone0-1200x630px](https://github.com/GetStream/fullstack-nextjs-whatsapp-clone/assets/39677/b6ee4e13-86a9-4bb7-b5e5-e783db4c0886)
 
 # Fullstack WhatsApp clone using Next.js, Vercel and Supabase
