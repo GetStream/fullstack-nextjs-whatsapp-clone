@@ -1,27 +1,37 @@
-import { NextResponse } from "next/server";
-import { StreamChat } from "stream-chat";
+import { NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
+import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
+import { StreamClient } from '@stream-io/node-sdk';
 
-export async function POST(request: Request) {
-  console.log("POST /api/create-user");
+export const dynamic = 'force-dynamic';
 
-  // 1 get the user ID we need as a parameter
-  const requestBody = await request.json();
-  const userId = requestBody.userId;
+// tokens expire after an hour; the client's tokenProvider fetches a new one
+const TOKEN_VALIDITY_IN_SECONDS = 60 * 60;
 
-  // 2 send user ID and any other required data to Stream Chat backend
-  const apiKey = process.env.NEXT_PUBLIC_REACT_APP_STREAM_KEY || "Set API Key";
-  const apiSecret = process.env.REACT_APP_STREAM_SECRET || "Set API Secret";
-  const client = StreamChat.getInstance(apiKey, apiSecret);
+export async function POST() {
+  // 1 only a signed-in user gets a token, and only for their own user ID
+  const supabase = createRouteHandlerClient({ cookies });
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
-  // 3 generate a user token
-  const upsertResponse = await client.upsertUser({
-    id: userId,
-    role: "user",
+  if (!user) {
+    return NextResponse.json({ error: 'Not signed in' }, { status: 401 });
+  }
+
+  // 2 make sure the user exists on Stream's backend
+  const apiKey = process.env.NEXT_PUBLIC_REACT_APP_STREAM_KEY || 'Set API Key';
+  const apiSecret = process.env.REACT_APP_STREAM_SECRET || 'Set API Secret';
+  const client = new StreamClient(apiKey, apiSecret);
+
+  await client.upsertUsers([{ id: user.id }]);
+
+  // 3 generate a short-lived user token for the chat and video clients
+  const token = client.generateUserToken({
+    user_id: user.id,
+    validity_in_seconds: TOKEN_VALIDITY_IN_SECONDS,
   });
 
-  const token = client.createToken(userId);
-
-  // URL to redirect to after sign in process completes
   return NextResponse.json({
     userToken: token,
   });

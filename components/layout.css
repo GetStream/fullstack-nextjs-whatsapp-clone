@@ -46,3 +46,18 @@ body {
 .channel-list-container {
   overflow-y: scroll;
 }
+
+.whatsapp-system-message {
+  display: flex;
+  justify-content: center;
+  margin: 0.5rem 0;
+}
+
+.whatsapp-system-message > span {
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.5rem;
+  background: #ffffff;
+  color: var(--icons-color);
+  font-size: 0.8125rem;
+  box-shadow: 0 1px 0.5px rgba(11, 20, 26, 0.13);
+}

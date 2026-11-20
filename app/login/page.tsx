@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Suspense } from 'react';
 import Messages from './messages';
 
 export default function Login() {
@@ -58,7 +59,10 @@ export default function Login() {
         >
           Sign Up
         </button>
-        <Messages />
+        {/* Messages reads the search params, so it renders client-side */}
+        <Suspense>
+          <Messages />
+        </Suspense>
       </form>
     </div>
   );
