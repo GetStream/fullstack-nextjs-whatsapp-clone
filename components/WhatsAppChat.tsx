@@ -62,29 +62,28 @@ export default function WhatsAppChat({ user }: { user: User }) {
     // the same user, as the video client expects it
     const chatUser = { id: userId };
 
-    fetch('/api/create-user', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ userId }),
-    }).then(async (res) => {
+    // Fetches a token for the signed-in user. The chat and video clients call
+    // it on connect and again whenever the token expires.
+    const tokenProvider = async () => {
+      const res = await fetch('/api/create-user', { method: 'POST' });
+      if (!res.ok) throw new Error(`Token request failed: ${res.status}`);
       const response: { userToken: string } = await res.json();
+      return response.userToken;
+    };
 
-      await chatClient.connectUser({ id: userId }, response.userToken);
+    const connect = async () => {
+      await chatClient.connectUser({ id: userId }, tokenProvider);
 
-      const _videoClient = new StreamVideoClient({
-        apiKey,
-        user: chatUser,
-        token: response.userToken,
-      });
+      const _videoClient = new StreamVideoClient(apiKey);
 
-      await _videoClient.connectUser({ id: userId }, response.userToken);
+      await _videoClient.connectUser(chatUser, tokenProvider);
 
       setVideoClient(_videoClient);
 
       setIsLoading(false);
-    });
+    };
+
+    connect().catch((err) => console.error('Failed to connect', err));
   }, [apiKey, chatClient, userId]);
 
   return (
