@@ -1,6 +1,6 @@
-@layer default-chat-sdk {
-  @import 'stream-chat-react/dist/scss/v2/index.scss';
-}
+// The chat stylesheet is imported once, in app/globals.css, before the WhatsApp
+// theme overrides. Next.js drops the `layer()` modifier from CSS imports, so a
+// second copy here would load after those overrides and reset them.
 
 @import '@stream-io/video-react-sdk/dist/css/styles.css'
   layer(default-video-sdk);
