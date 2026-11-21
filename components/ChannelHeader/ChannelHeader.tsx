@@ -51,29 +51,28 @@ const UnMemoizedChannelHeader = (props: ChannelHeaderProps) => {
 
   const subtitle = data?.custom?.subtitle;
 
+  // v15's header is a three-column grid: start, data and end
   return (
-    <div className="str-chat__header-livestream str-chat__channel-header">
-      <WorkspaceNavigationBackButton />
-      <Avatar
-        imageUrl={displayImage}
-        userName={displayTitle}
-        size={channel?.type === 'commerce' ? '2xl' : 'lg'}
-      />
-      <div className="str-chat__header-livestream-left str-chat__channel-header-end">
-        <p className="str-chat__header-livestream-left--title str-chat__channel-header-title">
+    <div className="str-chat__channel-header">
+      <div className="str-chat__channel-header__start">
+        <WorkspaceNavigationBackButton />
+        <Avatar
+          imageUrl={displayImage}
+          userName={displayTitle}
+          size={channel?.type === 'commerce' ? '2xl' : 'lg'}
+        />
+      </div>
+      <div className="str-chat__channel-header__data">
+        <div className="str-chat__channel-header__data__title">
           {displayTitle}{' '}
-          {live && (
-            <span className="str-chat__header-livestream-left--livelabel">
-              {t(asDynamicKey('live'), 'live')}
-            </span>
-          )}
-        </p>
+          {live && <span>{t(asDynamicKey('live'), 'live')}</span>}
+        </div>
         {subtitle && (
-          <p className="str-chat__header-livestream-left--subtitle">
+          <div className="str-chat__channel-header__data__subtitle">
             {subtitle}
-          </p>
+          </div>
         )}
-        <p className="str-chat__header-livestream-left--members str-chat__channel-header-info">
+        <div className="str-chat__channel-header__data__subtitle">
           {!live && !!memberCount && memberCount > 0 && (
             <>
               {t(
@@ -87,9 +86,11 @@ const UnMemoizedChannelHeader = (props: ChannelHeaderProps) => {
           {t('channelHeader.online.online.label', '{{ watcherCount }} online', {
             watcherCount,
           })}
-        </p>
+        </div>
       </div>
-      <CreateCallButton />
+      <div className="str-chat__channel-header__end">
+        <CreateCallButton />
+      </div>
     </div>
   );
 };

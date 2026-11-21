@@ -45,6 +45,8 @@ body {
 
 .channel-list-container {
   overflow-y: scroll;
+  /* keep the sidebar's width when the open channel has wide content */
+  flex-shrink: 0;
 }
 
 .whatsapp-system-message {
