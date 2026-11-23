@@ -1,5 +1,3 @@
-> **This sample is out of date.** It uses stream-chat-react 10. For a current app, follow the [React chat tutorial](https://getstream.io/chat/sdk/react/tutorial/).
-
 ![Building WhatsApp Clone0-1200x630px](https://github.com/GetStream/fullstack-nextjs-whatsapp-clone/assets/39677/b6ee4e13-86a9-4bb7-b5e5-e783db4c0886)
 
 # Fullstack WhatsApp clone using Next.js, Vercel and Supabase
@@ -17,6 +15,8 @@ The purpose of this repository is to demonstrate below:
 - How to implement authorization using Supabase.
 - How to integrate Stream Video in a Stream Chat implementation.
 
+Built with `stream-chat` 10, `stream-chat-react` 15, `@stream-io/video-react-sdk` 1, `@stream-io/node-sdk` (server-side user tokens) and Next.js 15.
+
 To run this code, you need to have an active [Stream](https://getstream.io/chat/trial/) and [Supabase](https://database.new) account.
 
 <!-- ## ✍️ Technical Content -->
@@ -30,7 +30,9 @@ To run this code, you need to have an active [Stream](https://getstream.io/chat/
 1. Rename `.env.local.example` to `.env.local`
 1. Update the values for `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` from [your Supabase project's API settings](https://app.supabase.com/project/_/settings/api)
 1. Update the values for `NEXT_PUBLIC_REACT_APP_STREAM_KEY` and `REACT_APP_STREAM_SECRET` from [your Stream project's dashboard](https://dashboard.getstream.io/)
-1. Run `npm run dev` to start the local development server
+1. Run `npm install`, then `npm run dev` to start the local development server
+
+The app doesn't create channels for you: it lists the `messaging` channels the signed-in user is a member of. Create one between two signed-up users (for example from the Stream dashboard's Chat Explorer), then click it in the list to open it.
 
 ### Deploy your own instance
 

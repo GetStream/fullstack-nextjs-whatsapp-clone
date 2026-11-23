@@ -1,21 +1,17 @@
 import { Avatar } from 'stream-chat-react';
-import { UserResponse } from 'stream-chat';
 import './layout.css';
 import LogoutButton from './LogoutButton';
 
-export default function ChannelListHeader({
-  user,
-}: {
-  user: UserResponse | undefined;
-}): JSX.Element {
+// Prop-less: ChannelNavigation renders it from the `ChannelListHeader`
+// component override (see WhatsAppChat.tsx).
+export default function ChannelListHeader() {
   return (
     <div className="text-white flex items-center justify-between profile-row p-4">
       <Avatar
-        image={`https://getstream.io/random_png/?id=${
-          user?.id || 'undefined'
-        }&name=${user?.name || 'undefined'}`}
-        shape="rounded"
-        size={50}
+        imageUrl={
+          'https://images.pexels.com/photos/5378700/pexels-photo-5378700.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
+        }
+        size="xl"
       />
       <div className="flex items-center">
         <button className="w-6 h-6">

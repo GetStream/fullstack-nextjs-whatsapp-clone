@@ -1,9 +1,11 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
-import { StreamChat, ChannelSort, ChannelFilters } from 'stream-chat';
-import { ChannelList, Chat } from 'stream-chat-react';
+import { ChannelPaginator, StreamChat } from 'stream-chat';
+import { ChannelNavigation, Chat, WithComponents } from 'stream-chat-react';
+import { ChatView } from 'stream-chat-react/slot-layout';
+import type { LayoutDescriptor } from 'stream-chat-react/slot-layout';
 
 import { Channel } from './Channel';
 import {
@@ -20,50 +22,69 @@ import './styles/index.scss';
 import { User } from '@supabase/supabase-js';
 import ChannelListHeader from './ChannelListHeader';
 
+// our header replaces the channel list's default one
+const channelListOverrides = { ChannelListHeader };
+
+// one view with two slots: the open channel and a thread opened from it
+const layouts: LayoutDescriptor[] = [
+  { id: 'channels', slots: ['channel', 'thread'] },
+];
+
 export default function WhatsAppChat({ user }: { user: User }) {
   const apiKey = process.env.NEXT_PUBLIC_REACT_APP_STREAM_KEY || 'Set API Key';
+  const userId = user.id;
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const chatClient = StreamChat.getInstance(apiKey);
   const [videoClient, setVideoClient] = useState<StreamVideoClient>();
 
-  const sort: ChannelSort = { last_message_at: -1 };
-  const filters: ChannelFilters = {
-    type: 'messaging',
-    members: { $in: [user.id] },
-  };
-
-  const chatUser = chatClient.user;
+  // the channel list: messaging channels this user is a member of, most recent first
+  const paginator = useMemo(
+    () =>
+      new ChannelPaginator({
+        client: chatClient,
+        id: 'whatsapp-channels',
+        filters: { type: 'messaging', members: { $in: [userId] } },
+        sort: [{ direction: -1, field: 'last_message_at' }],
+      }),
+    [chatClient, userId],
+  );
 
   useEffect(() => {
-    console.log('user', user);
-    const userId = user.id;
-    fetch('/api/create-user', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ userId: userId }),
-    }).then(async (res) => {
-      const response = await res.json();
-      console.log(response);
+    chatClient.channelManager.insertPaginator({ paginator });
+    return () => {
+      chatClient.channelManager.removePaginator(paginator);
+    };
+  }, [chatClient, paginator]);
 
-      await chatClient.connectUser({ id: userId }, response.userToken);
+  useEffect(() => {
+    // the same user, as the video client expects it
+    const chatUser = { id: userId };
 
-      const _videoClient = new StreamVideoClient({
-        apiKey,
-        user: chatUser,
-        token: response.userToken,
-      });
+    // Fetches a token for the signed-in user. The chat and video clients call
+    // it on connect and again whenever the token expires.
+    const tokenProvider = async () => {
+      const res = await fetch('/api/create-user', { method: 'POST' });
+      if (!res.ok) throw new Error(`Token request failed: ${res.status}`);
+      const response: { userToken: string } = await res.json();
+      return response.userToken;
+    };
 
-      await _videoClient.connectUser({ id: userId }, response.userToken);
+    const connect = async () => {
+      await chatClient.connectUser({ id: userId }, tokenProvider);
+
+      const _videoClient = new StreamVideoClient(apiKey);
+
+      await _videoClient.connectUser(chatUser, tokenProvider);
 
       setVideoClient(_videoClient);
 
       setIsLoading(false);
-    });
-  }, []);
+    };
+
+    connect().catch((err) => console.error('Failed to connect', err));
+  }, [apiKey, chatClient, userId]);
 
   return (
     <>
@@ -77,16 +98,22 @@ export default function WhatsAppChat({ user }: { user: User }) {
           <Chat client={chatClient}>
             <StreamVideo client={videoClient}>
               <StreamTheme as="main" className="main-container">
-                <div className="channel-list-container">
-                  <ChannelListHeader user={chatUser} />
-                  <ChannelList
-                    sort={sort}
-                    filters={filters}
-                    showChannelSearch
-                  />
-                </div>
-                <Channel />
-                <Video />
+                <ChatView
+                  layouts={layouts}
+                  views={{
+                    channels: (
+                      <>
+                        <div className="channel-list-container">
+                          <WithComponents overrides={channelListOverrides}>
+                            <ChannelNavigation />
+                          </WithComponents>
+                        </div>
+                        <Channel />
+                        <Video />
+                      </>
+                    ),
+                  }}
+                />
               </StreamTheme>
             </StreamVideo>
           </Chat>
